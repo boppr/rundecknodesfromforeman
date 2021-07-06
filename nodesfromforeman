@@ -1,0 +1,3 @@
+#!/bin/bash
+
+curl -k -u foremanuser:foremanpass https://foreman.local/api/v2/hosts | jq 'del (.results[] | select(.subscription_facet_attributes.hypervisor == true))' |  jq '[.results[] | {nodename: .name, hostname: .name, osArch: .architecture_name, osName: .operatingsystem_name, tags: [.hostgroup_name, .environment_name, .domain_name, .location_name] }]'
